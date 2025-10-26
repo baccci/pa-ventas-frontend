@@ -1,0 +1,1 @@
+export { FormLinea } from './components/formLinea'
