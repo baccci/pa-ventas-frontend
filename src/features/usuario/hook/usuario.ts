@@ -1,18 +1,18 @@
-import { useMutation  } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { loginService } from '../services/get-usuario'
 
 export interface LoginVariables {
-  user: string;
-  password: string;
+	email: string
+	password: string
 }
 
 export function useUser() {
-  const usersQuery = useMutation({
-    mutationFn: ({ user, password }: LoginVariables) => loginService(user, password),
-  })
+	const usersQuery = useMutation({
+		mutationFn: ({ email, password }: LoginVariables) =>
+			loginService(email, password),
+	})
 
-  return {
-    ...usersQuery
-
-  }
+	return {
+		...usersQuery,
+	}
 }
