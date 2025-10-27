@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { FormMarca } from '@/features/marca'
 import { FormLinea } from '@/features/linea'
+import { FormProducto } from '../components/FormProducto'
 import { useProductContext } from '../hook/productos'
 
 export default function ProductoScreen() {
@@ -10,6 +11,7 @@ export default function ProductoScreen() {
   // const emptyTable = data?.items.length === 0
   const [mostrarFormMarca, setMostrarFormMarca] = useState(false)
   const [mostrarFormLinea, setMostrarFormLinea] = useState(false)
+  const [mostrarFormProducto, setMostrarFormProducto] = useState(false);
 
   if (isLoading) {
     return <div className="p-8">Cargando productos...</div>
@@ -18,6 +20,12 @@ export default function ProductoScreen() {
   if (isError) {
     return <div className="p-8 text-red-600">Error al cargar los productos.</div>
   }
+
+  const handleSuccess = (producto: any) => {
+    console.log('Producto creado:', producto);
+    setMostrarFormProducto(false);
+    // 💡 Aquí podrías llamar a la invalidación de la caché de TanStack Query si fuera necesario
+  };
 
   return (
     <div className="p-8">
@@ -65,39 +73,46 @@ export default function ProductoScreen() {
         </div>
       )}
 
-      {/* 4. Mostrar la Tabla o Lista de Productos */}
-      <h2 className="text-xl font-bold mt-8 mb-4">Lista de Productos ({products.length})</h2>
-      
-      {products.length > 0 ? (
-        <div className="border rounded-lg overflow-hidden">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Marca</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Línea</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Precio</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {products.map((product) => (
-                <tr key={product.nombre + product.marca}> {/* Usar un identificador único real si existe */}
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{product.nombre}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.marca}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.linea}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${product.precio.toFixed(2)}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.stock}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      {/* 4. Lista de Productos (Se oscurece/oculta si el formulario está activo) */}
+        <div className={mostrarFormProducto ? 'opacity-20 pointer-events-none' : ''}>
+          <h2 className="text-xl font-bold mb-4">Lista de Productos ({products.length})</h2>
+          
+          {products.length > 0 ? (
+            // ... (Tu código de la tabla) ...
+            <div className="border rounded-lg overflow-hidden">
+                <table className="min-w-full divide-y divide-gray-200">
+                    {/* ... Thead ... */}
+                    <tbody className="bg-white divide-y divide-gray-200">
+                        {products.map((product) => (
+                            <tr key={product.nombre + product.marca}> 
+                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{product.nombre}</td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.marca}</td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.linea}</td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${product.precio.toFixed(2)}</td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.stock}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+          ) : (
+            <p>No se encontraron productos.</p>
+          )}
         </div>
-      ) : (
-        <p>No se encontraron productos.</p>
-      )}
-      
-    </div>
+
+        {/* 🛑 Formulario de Producto (Superpuesto) */}
+        {mostrarFormProducto && (
+          <div className="absolute inset-0 flex items-center justify-center bg-white/70 backdrop-blur-sm z-10">
+            <div className="bg-white p-6 rounded-lg shadow-2xl w-full max-w-lg border border-gray-300">
+              <FormProducto
+                onCancel={() => setMostrarFormProducto(false)}
+                onSuccess={handleSuccess}
+                // Aquí pasarías los hooks o datos necesarios para las marcas/líneas
+              />
+            </div>
+          </div>
+        )}
+      </div>
   )
 }
 
