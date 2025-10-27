@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
-import { loginService } from '../services/get-usuario'
+import { loginService } from '../services/post-usuario'
 
 export interface LoginVariables {
 	email: string

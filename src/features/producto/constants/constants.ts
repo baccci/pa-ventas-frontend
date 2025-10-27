@@ -16,6 +16,9 @@ export const FORM_FIELD_ERRORS = {
     min: 'El stock debe ser mayor a 0',
     max: 'El stock máximo es de 10,000',
     required: 'El stock es requerido'
+  },
+  descripcion: {
+    maxLength: 'La descripción no puede superar los 100 caracteres'
   }
 }
 
@@ -27,5 +30,9 @@ export const PRODUCTS_LIMITS = {
   stock: {
     min: 0,
     max: 10000
+  },
+  descripcion: {
+    maxLength: 100,
   }
+
 }

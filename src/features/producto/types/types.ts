@@ -5,6 +5,7 @@ export type ProductResponse = {
 
 export type Product = {
   nombre: string
+  descripcion?: string
   marca: string
   linea: string
   precio: number

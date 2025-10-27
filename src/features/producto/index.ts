@@ -1,1 +1,1 @@
-export { default as ProductoScreen } from './components/ProductoScreen'
+export { default as ProductoScreen } from './components/producto-screen'

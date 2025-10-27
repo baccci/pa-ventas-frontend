@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useUser } from '@/features/usuario/hook/usuario'
-import { getUser } from '@/features/usuario/services/get-usuario'
+import { getUser } from '@/features/usuario/services/post-usuario'
 
 export const Route = createFileRoute('/login')({
 	component: RouteComponent,
