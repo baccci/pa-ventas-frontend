@@ -5,6 +5,7 @@ import { IconBox } from '@/components/icons/icon-box'
 import { IconChart } from '@/components/icons/icon-chart'
 import { PageHeader } from '@/components/page-header'
 import { Wrapper } from '@/components/wrapper'
+import Filters from '@/features/dashboard/components/filters'
 
 export const Route = createFileRoute('/')({ component: App })
 
@@ -28,6 +29,7 @@ function App() {
 					title="Dashboard de Ventas"
 					description="Resumen general de productos y ventas"
 				/>
+				<Filters />
 			</Wrapper>
 		</div>
 	)
