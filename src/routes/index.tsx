@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Button } from '@/components/button'
+import { Card } from '@/components/card'
 import { GlobalHeader } from '@/components/global-header'
 import { IconBox } from '@/components/icons/icon-box'
 import { IconChart } from '@/components/icons/icon-chart'
@@ -30,6 +31,10 @@ function App() {
 					description="Resumen general de productos y ventas"
 				/>
 				<Filters />
+				<div className="flex justify-between gap-4">
+					<Card title="Ventas por producto">asf</Card>
+					<Card title="Ventas Mensuales">asf</Card>
+				</div>
 			</Wrapper>
 		</div>
 	)
