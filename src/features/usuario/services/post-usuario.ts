@@ -12,7 +12,7 @@ export async function loginService(
 	try {
 		const backendUrl = env.BACKEND_URL || 'http://localhost:3000'
 
-		const productsApiUrl = new URL(`${backendUrl}/users/signin/`)
+		const productsApiUrl = new URL(`${backendUrl}/api/auth/sign-in/email`)
 
 		const response = await fetch(productsApiUrl.toString(), {
 			method: 'POST',

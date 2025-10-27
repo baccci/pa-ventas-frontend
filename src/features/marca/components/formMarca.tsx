@@ -29,6 +29,7 @@ export default function FormMarca({ onSuccess, onCancel }: FormMarcaProps) {
 
   return (
     <form
+      noValidate
       onSubmit={handleSubmit}
       className="bg-white p-4 rounded shadow-md w-96 space-y-4"
     >
