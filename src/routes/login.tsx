@@ -11,6 +11,7 @@ function RouteComponent() {
 	const userFromCookie = getUser()
 
 	function handleLogin() {
+		console.log('handleLogin')
 		mutate({ email: 'a@a.com', password: 'password123' })
 	}
 
