@@ -6,8 +6,7 @@ export type ProductResponse = {
 export type Product = {
   nombre: string
   descripcion?: string
-  marca: string
-  linea: string
+  marcaXLineaId: string
   precio: number
   stock: number
 }

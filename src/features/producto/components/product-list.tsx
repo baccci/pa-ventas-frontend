@@ -38,8 +38,6 @@ const ProductListContent: React.FC<{
             <tr>
               <th className="px-4 py-2 text-left text-sm font-semibold">Nombre</th>
               <th className="px-4 py-2 text-left text-sm font-semibold">Precio</th>
-              <th className="px-4 py-2 text-left text-sm font-semibold">Marca</th>
-              <th className="px-4 py-2 text-left text-sm font-semibold">Línea</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 bg-white">
@@ -47,8 +45,6 @@ const ProductListContent: React.FC<{
               <tr key={p.id}>
                 <td className="px-4 py-2">{p.nombre}</td>
                 <td className="px-4 py-2">{p.precio}</td>
-                <td className="px-4 py-2">{p.marca?.nombre ?? '-'}</td>
-                <td className="px-4 py-2">{p.linea?.nombre ?? '-'}</td>
               </tr>
             ))}
           </tbody>

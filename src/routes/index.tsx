@@ -7,16 +7,22 @@ import { IconChart } from '@/components/icons/icon-chart'
 import { PageHeader } from '@/components/page-header'
 import { Wrapper } from '@/components/wrapper'
 import Filters from '@/features/dashboard/components/filters'
+import { useRouter } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/')({ component: App })
 
 function App() {
+	const { navigate } = useRouter();
+
+	const handleProductosClick = () => {
+    navigate({ to: '/productos' }); // Redirigir a /productos
+  };
 	return (
 		<div className="">
 			<Wrapper
 				globalHeader={
 					<GlobalHeader title="SalesManager">
-						<Button>
+						<Button onClick={handleProductosClick}>
 							<IconBox width={16} /> Productos
 						</Button>
 						<Button variant="outline">
