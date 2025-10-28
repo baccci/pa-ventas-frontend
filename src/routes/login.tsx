@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import React from 'react'
 import { useUser } from '@/features/usuario/hook/usuario'
 
 export const Route = createFileRoute('/login')({
@@ -9,9 +10,12 @@ function RouteComponent() {
 	const { data, mutate, isSuccess, isPending } = useUser()
 
 	function handleLogin() {
-		console.log('handleLogin')
 		mutate({ email: 'a@a.com', password: 'password123' })
 	}
+
+	React.useEffect(() => {
+		console.log('data', data)
+	}, [data])
 
 	return (
 		<div className="flex flex-col gap-4 w-full h-screen justify-center items-center">
@@ -26,9 +30,9 @@ function RouteComponent() {
 				{isSuccess && data && (
 					<div>
 						<h2>Login Successful!</h2>
-						<p>Token: {data.token}</p>
-						<p>User: {data.user.name}</p>
-						<p>Email: {data.user.email}</p>
+						<p>Token: {data?.token}</p>
+						<p>User: {data?.user?.name}</p>
+						<p>Email: {data?.user?.email}</p>
 					</div>
 				)}
 			</div>
