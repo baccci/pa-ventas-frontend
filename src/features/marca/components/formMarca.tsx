@@ -1,77 +1,66 @@
-import { useState } from 'react'
-import { useCreateMarca } from '../hooks/useMarca'
+import { useState, useEffect } from 'react'
+import { useCreateMarca, useUpdateMarca } from '../hooks/useMarca'
+import type { Marca } from '../services/marca.service'
 
-export interface FormMarcaProps {
-  onSuccess?: (marca: any) => void
+interface FormMarcaProps {
+  initialData?: Marca
+  onSuccess?: () => void
   onCancel?: () => void
 }
 
-export default function FormMarca({ onSuccess, onCancel }: FormMarcaProps) {
-  const mutation = useCreateMarca()
-  const [nombre, setNombre] = useState('')
-  const [descripcion, setDescripcion] = useState('')
+export const FormMarca = ({ initialData, onSuccess, onCancel }: FormMarcaProps) => {
+  const [nombre, setNombre] = useState(initialData?.nombre || '')
+  const [descripcion, setDescripcion] = useState(initialData?.descripcion || '')
+  const createMutation = useCreateMarca()
+  const updateMutation = useUpdateMarca()
+
+  useEffect(() => {
+    if (initialData) {
+      setNombre(initialData.nombre)
+      setDescripcion(initialData.descripcion || '')
+    }
+  }, [initialData])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!nombre.trim()) return alert('El nombre es obligatorio.')
-
     try {
-      const marca = await mutation.mutateAsync({ nombre, descripcion })
-      onSuccess?.(marca)
-      setNombre('')
-      setDescripcion('')
-    } catch (error) {
-      console.error('Error al crear marca:', error)
+      if (initialData?.id) {
+        await updateMutation.mutateAsync({ id: initialData.id, data: { nombre, descripcion } })
+      } else {
+        await createMutation.mutateAsync({ nombre, descripcion })
+      }
+      onSuccess?.()
+    } catch (err) {
+      console.error('Error al guardar la marca', err)
     }
   }
 
-  const loading = mutation.status === 'pending'
-
   return (
-    <form
-      noValidate
-      onSubmit={handleSubmit}
-      className="bg-white p-4 rounded shadow-md w-96 space-y-4"
-    >
-      <h2 className="text-lg font-semibold">Registrar Marca</h2>
-
-      <div className="flex flex-col">
-        <label className="font-medium mb-1">Nombre *</label>
-        <input
-          type="text"
-          value={nombre}
-          onChange={(e) => setNombre(e.target.value)}
-          className="border border-gray-300 rounded px-2 py-1"
-          required
-        />
-      </div>
-
-      <div className="flex flex-col">
-        <label className="font-medium mb-1">Descripción</label>
-        <textarea
-          value={descripcion}
-          onChange={(e) => setDescripcion(e.target.value)}
-          className="border border-gray-300 rounded px-2 py-1 resize-none"
-          rows={3}
-          placeholder="Opcional"
-        />
-      </div>
-
-      <div className="flex justify-end gap-2">
-        <button
-          type="button"
-          onClick={onCancel}
-          className="px-3 py-1 bg-gray-300 rounded hover:bg-gray-400"
-        >
-          Cancelar
+    <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+      <input
+        type="text"
+        placeholder="Nombre"
+        value={nombre}
+        onChange={e => setNombre(e.target.value)}
+        required
+        className="border px-2 py-1 rounded"
+      />
+      <input
+        type="text"
+        placeholder="Descripción"
+        value={descripcion}
+        onChange={e => setDescripcion(e.target.value)}
+        className="border px-2 py-1 rounded"
+      />
+      <div className="flex gap-2">
+        <button type="submit" className="px-3 py-1 bg-green-600 text-white rounded">
+          {initialData ? 'Guardar cambios' : 'Crear'}
         </button>
-        <button
-          type="submit"
-          disabled={loading}
-          className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
-        >
-          {loading ? 'Guardando...' : 'Guardar'}
-        </button>
+        {onCancel && (
+          <button type="button" onClick={onCancel} className="px-3 py-1 bg-gray-300 rounded">
+            Cancelar
+          </button>
+        )}
       </div>
     </form>
   )

@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VentasRouteImport } from './routes/ventas'
 import { Route as ProductosRouteImport } from './routes/productos'
+import { Route as MarcasRouteImport } from './routes/marcas'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PostsPostIdRouteImport } from './routes/posts/$postId'
@@ -34,6 +35,11 @@ const VentasRoute = VentasRouteImport.update({
 const ProductosRoute = ProductosRouteImport.update({
   id: '/productos',
   path: '/productos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MarcasRoute = MarcasRouteImport.update({
+  id: '/marcas',
+  path: '/marcas',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -110,6 +116,7 @@ const DemoStartSsrDataOnlyRoute = DemoStartSsrDataOnlyRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/marcas': typeof MarcasRoute
   '/productos': typeof ProductosRoute
   '/ventas': typeof VentasRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
@@ -128,6 +135,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/marcas': typeof MarcasRoute
   '/productos': typeof ProductosRoute
   '/ventas': typeof VentasRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
@@ -147,6 +155,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/marcas': typeof MarcasRoute
   '/productos': typeof ProductosRoute
   '/ventas': typeof VentasRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
@@ -167,6 +176,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/login'
+    | '/marcas'
     | '/productos'
     | '/ventas'
     | '/demo/tanstack-query'
@@ -185,6 +195,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/login'
+    | '/marcas'
     | '/productos'
     | '/ventas'
     | '/demo/tanstack-query'
@@ -203,6 +214,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/login'
+    | '/marcas'
     | '/productos'
     | '/ventas'
     | '/demo/tanstack-query'
@@ -222,6 +234,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoginRoute: typeof LoginRoute
+  MarcasRoute: typeof MarcasRoute
   ProductosRoute: typeof ProductosRoute
   VentasRoute: typeof VentasRoute
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
@@ -252,6 +265,13 @@ declare module '@tanstack/react-router' {
       path: '/productos'
       fullPath: '/productos'
       preLoaderRoute: typeof ProductosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/marcas': {
+      id: '/marcas'
+      path: '/marcas'
+      fullPath: '/marcas'
+      preLoaderRoute: typeof MarcasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -358,6 +378,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoginRoute: LoginRoute,
+  MarcasRoute: MarcasRoute,
   ProductosRoute: ProductosRoute,
   VentasRoute: VentasRoute,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,

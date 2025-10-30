@@ -13,7 +13,7 @@ import { Marca } from '@/features/marca/types/marca'
 // Importar hooks y formularios de otras features
 import { useMarcas } from '@/features/marca/hooks/useMarca'
 import { useLinea } from '@/features/linea/hooks/useLinea'
-import FormMarca from '@/features/marca/components/formMarca' // Usaremos el componente que proporcionaste
+import FormMarca from '@/features/marca/components/FormMarca' // Usaremos el componente que proporcionaste
 import { FormLinea } from '@/features/linea/components/formLinea' // Usaremos el componente que proporcionaste
 import { useCreateProduct } from '../hook/crear-producto'
 

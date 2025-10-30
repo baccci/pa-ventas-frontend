@@ -14,20 +14,22 @@ export const Route = createFileRoute('/')({ component: App })
 function App() {
 	const { navigate } = useRouter();
 
-	const handleProductosClick = () => {
-    navigate({ to: '/productos' }); // Redirigir a /productos
-  };
 	return (
 		<div className="">
 			<Wrapper
 				globalHeader={
 					<GlobalHeader title="SalesManager">
-						<Button onClick={handleProductosClick}>
-							<IconBox width={16} /> Productos
+						<Button onClick={() => navigate({ to: '/productos' })}>
+							<IconBox width={16} />
+							Productos
 						</Button>
 						<Button variant="outline">
 							<IconChart width={16} />
 							Ventas
+						</Button>
+						<Button onClick={() => navigate({ to: '/marcas' })}>
+							<IconBox width={16} />
+							Marcas
 						</Button>
 					</GlobalHeader>
 				}

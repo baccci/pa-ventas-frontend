@@ -1,1 +1,1 @@
-export { default as FormMarca } from './components/formMarca'
+export { default as FormMarca } from './components/FormMarca'
