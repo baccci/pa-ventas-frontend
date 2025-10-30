@@ -1,16 +1,50 @@
-import axios from 'axios'
 import { env } from '@/lib/env'
-import { Linea } from '../types/linea'
+import { auth_fetch } from '@/lib/auth-fetch'
+import type { LineaResponse } from '../types/linea'
 
 const API_URL = env.BACKEND_URL || 'http://localhost:3000'
 const lineasApiUrl = (`${API_URL}/linea`)
 
-export const createLinea = async (linea: Linea) => {
-  const { data } = await axios.post(lineasApiUrl, linea)
-  return data
+export const createLinea = async (nombre: string, descripcion: string | undefined, marcaId: string | undefined): Promise<LineaResponse> => {
+  try {
+    const response = await auth_fetch(lineasApiUrl.toString(), {
+        method: 'POST',
+        body: JSON.stringify({ nombre, descripcion, marcaId }),
+        headers: {
+          'Content-Type': 'application/json'
+        }, 
+        credentials: 'include'
+      })
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch lineas')
+      }
+
+      const data = await response.json()
+      return data as LineaResponse
+  } catch {
+    throw new Error('Failed to fetch lineas')
+  }
 }
 
 export const getLineas = async () => {
-  const res = await axios.get<Linea[]>(lineasApiUrl)
-  return res.data
+  try {
+    const response = await auth_fetch(lineasApiUrl.toString(), {
+        method: 'GET',
+        body: JSON.stringify({}),
+        headers: {
+          'Content-Type': 'application/json'
+        }, 
+        credentials: 'include'
+      })
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch lineas')
+      }
+
+      const data = await response.json()
+      return data as LineaResponse
+  } catch {
+    throw new Error('Failed to fetch lineas')
+  }
 }
