@@ -1,20 +1,15 @@
-import Cookies from 'js-cookie'
 import { env } from '@/lib/env'
-import type { AuthResponse } from '../types/types'
-
-const AUTH_COOKIE_NAME = 'auth_token'
-const USER_COOKIE_NAME = 'user'
+import { BEARER_TOKEN_KEY } from '../constants/auth'
+import type { AuthData, AuthResponse } from '../types/types'
 
 export async function loginService(
 	email: string,
 	password: string,
-): Promise<AuthResponse> {
+): Promise<AuthData> {
 	try {
-		const backendUrl = env.BACKEND_URL || 'http://localhost:3000'
+		const usersLoginURL = new URL(`${env.BACKEND_URL}/users/signin/`)
 
-		const productsApiUrl = new URL(`${backendUrl}/api/auth/sign-in/email`)
-
-		const response = await fetch(productsApiUrl.toString(), {
+		const response = await fetch(usersLoginURL.toString(), {
 			method: 'POST',
 			body: JSON.stringify({ email, password }),
 			headers: {
@@ -23,32 +18,17 @@ export async function loginService(
 			credentials: 'include',
 		})
 
+		const authToken = response.headers.get('set-auth-token') ?? ''
+		localStorage.setItem(BEARER_TOKEN_KEY, authToken)
+
 		if (!response.ok) {
 			throw new Error('Failed to fetch user')
 		}
 
 		const data = (await response.json()) as AuthResponse
 
-		// Store token and user in cookies
-		Cookies.set(AUTH_COOKIE_NAME, data.token, { expires: 7 }) // Expires in 7 days
-		Cookies.set(USER_COOKIE_NAME, JSON.stringify(data.user), { expires: 7 })
-
-		return data
+		return data.response
 	} catch {
 		throw new Error('Failed to fetch user')
 	}
-}
-
-export function getAuthToken(): string | undefined {
-	return Cookies.get(AUTH_COOKIE_NAME)
-}
-
-export function getUser() {
-	const userCookie = Cookies.get(USER_COOKIE_NAME)
-	return userCookie ? JSON.parse(userCookie) : null
-}
-
-export function removeAuthCookies() {
-	Cookies.remove(AUTH_COOKIE_NAME)
-	Cookies.remove(USER_COOKIE_NAME)
 }

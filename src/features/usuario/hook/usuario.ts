@@ -8,8 +8,9 @@ export interface LoginVariables {
 
 export function useUser() {
 	const usersQuery = useMutation({
-		mutationFn: ({ email, password }: LoginVariables) =>
-			loginService(email, password),
+		mutationFn: async ({ email, password }: LoginVariables) => {
+			return await loginService(email, password)
+		},
 	})
 
 	return {

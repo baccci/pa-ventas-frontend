@@ -1,3 +1,4 @@
+import { auth_fetch } from '@/lib/auth-fetch'
 import { env } from '@/lib/env'
 import type { ProductResponse } from '../types/types'
 
@@ -7,7 +8,7 @@ export async function getProductsService(): Promise<ProductResponse> {
 
 		const productsApiUrl = new URL(`${backendUrl}/product`)
 
-		const response = await fetch(productsApiUrl.toString(), {
+		const response = await auth_fetch(productsApiUrl.toString(), {
 			method: 'GET',
 		})
 
