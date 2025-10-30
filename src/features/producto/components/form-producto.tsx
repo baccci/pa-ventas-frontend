@@ -8,6 +8,7 @@ import { Input } from '@/components/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, SelectGroup } from '@/components/select'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/popover'
 import { Linea } from '@/features/linea/types/linea'
+import { Marca } from '@/features/marca/types/marca'
 
 // Importar hooks y formularios de otras features
 import { useMarcas } from '@/features/marca/hooks/useMarca'
@@ -67,7 +68,7 @@ export const FormProducto = ({ onSuccess, onCancel }: FormProductoProps) => {
     }
 
     const marcasOptions = useMemo(() => 
-        (marcas || []).map(m => ({ label: m.nombre, value: String(m.id) }))
+        (marcas as Marca[] | undefined || []).map(m => ({ label: m.nombre, value: String(m.id) }))
     , [marcas])
 
     const lineasOptions = useMemo(() => 

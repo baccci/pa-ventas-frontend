@@ -3,6 +3,11 @@
 import { useState } from 'react'
 import { FormProducto } from './form-producto'
 import { ProductList } from './product-list'
+import { GlobalHeader } from '@/components/global-header'
+import { Wrapper } from '@/components/wrapper'
+import { PageHeader } from '@/components/page-header'
+import { Button } from '@/components/button'
+import { ProductProvider } from '../hook/productos'
 
 export default function ProductoScreen() {
   const [mostrarFormProducto, setMostrarFormProducto] = useState(false)
@@ -18,22 +23,29 @@ export default function ProductoScreen() {
 
   return (
     <div className="relative p-8">
-      {/* 🏷️ Encabezado */}
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">Gestión de Producto</h1>
-
-        <div className="flex gap-2">
-          <button
-            onClick={toggleForm}
-            className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
-          >
-            Crear Nuevo Producto
-          </button>
-        </div>
+      <div className="">
+            <Wrapper
+              globalHeader={
+                <GlobalHeader title="SalesManager">
+                  <Button
+                    onClick={toggleForm}
+                    className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
+                  >
+                    Nuevo Producto
+                  </Button>
+                </GlobalHeader>
+              }
+            >
+              <PageHeader
+                title="Gestión de Productos"
+                description="Administra tu inventario de productos"
+              />
+              {/* 📦 Lista de productos */}
+              <ProductProvider>
+                <ProductList />
+              </ProductProvider>
+            </Wrapper>
       </div>
-
-      {/* 📦 Lista de productos */}
-      <ProductList />
 
       {/* 🧾 Modal del formulario de producto */}
       {mostrarFormProducto && (

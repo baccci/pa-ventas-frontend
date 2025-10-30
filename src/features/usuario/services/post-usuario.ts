@@ -1,6 +1,7 @@
 import { env } from '@/lib/env'
 import { BEARER_TOKEN_KEY } from '../constants/auth'
 import type { AuthData, AuthResponse } from '../types/types'
+import { auth_fetch } from '@/lib/auth-fetch'
 
 export async function loginService(
 	email: string,
@@ -9,7 +10,7 @@ export async function loginService(
 	try {
 		const usersLoginURL = new URL(`${env.BACKEND_URL}/users/signin/`)
 
-		const response = await fetch(usersLoginURL.toString(), {
+		const response = await auth_fetch(usersLoginURL.toString(), {
 			method: 'POST',
 			body: JSON.stringify({ email, password }),
 			headers: {
