@@ -40,7 +40,8 @@ export const FormLinea = ({ onSuccess, onCancel }: FormLineaProps) => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 bg-white rounded shadow-md w-full max-w-md">
+    <form onSubmit={handleSubmit} noValidate className="p-4 bg-white rounded shadow-md w-full max-w-md">
+      
       <div className="mb-2">
         <label>Nombre*</label>
         <input

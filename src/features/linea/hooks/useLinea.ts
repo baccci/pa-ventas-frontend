@@ -1,5 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { createLinea, Linea } from '../services/linea.service'
+import { createLinea } from '../services/linea.service'
+import { useQuery } from '@tanstack/react-query'
+import { getLineas } from '../services/linea.service'
+import { Linea } from '../types/linea'
 
 export const useCreateLinea = () => {
   const queryClient = useQueryClient()
@@ -10,3 +13,12 @@ export const useCreateLinea = () => {
     },
   })
 }
+
+export const useLinea = () => {
+  return useQuery<Linea[]>({
+    queryKey: ['lineas'],
+    queryFn: getLineas,
+  })
+}
+
+
