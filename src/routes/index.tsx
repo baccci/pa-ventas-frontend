@@ -7,6 +7,8 @@ import { IconChart } from '@/components/icons/icon-chart'
 import { PageHeader } from '@/components/page-header'
 import { Wrapper } from '@/components/wrapper'
 import Filters from '@/features/dashboard/components/filters'
+import { ProductSales } from '@/features/dashboard/components/product-sales'
+import { ProductsChart } from '@/features/dashboard/components/products-chart'
 
 export const Route = createFileRoute('/')({ component: App })
 
@@ -32,8 +34,8 @@ function App() {
 				/>
 				<Filters />
 				<div className="flex justify-between gap-4">
-					<Card title="Ventas por producto">asf</Card>
-					<Card title="Ventas Mensuales">asf</Card>
+					<ProductSales />
+					<ProductsChart />
 				</div>
 			</Wrapper>
 		</div>

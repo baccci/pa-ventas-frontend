@@ -14,7 +14,7 @@ export const Card: React.FC<CardProps> = ({
 	return (
 		<div
 			className={cn(
-				'flex flex-col w-full p-6 bg-white rounded-xl border-gray-200 border mb-6',
+				'flex flex-col w-full p-6 bg-white rounded-xl border-gray-200 border mb-6 gap-3',
 				className,
 			)}
 			{...props}
