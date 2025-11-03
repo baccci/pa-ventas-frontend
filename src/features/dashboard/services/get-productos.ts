@@ -3,9 +3,18 @@ import { env } from '@/lib/env'
 import ventasArrayMock from '../data'
 import type { VentasResponse } from '../types/service-response'
 
-export async function getProductsService(): Promise<VentasResponse> {
+export async function getProductsService(
+	from?: Date,
+	to?: Date,
+): Promise<VentasResponse> {
 	return new Promise((resolve, reject) => {
 		const ventasURL = new URL(`${env.BACKEND_URL}/ventas`)
+
+		if (from && to) {
+			ventasURL.searchParams.set('from', from.toISOString())
+			ventasURL.searchParams.set('to', to.toISOString())
+		}
+
 		const isDev = process.env.NODE_ENV === 'development'
 
 		if (isDev) {

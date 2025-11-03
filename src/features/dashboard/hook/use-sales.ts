@@ -7,8 +7,8 @@ type Sale = {
 	profitAmount: number
 }
 
-export function useSales() {
-	const { data, isLoading, isError } = useGetProducts()
+export function useSales(from?: Date, to?: Date) {
+	const { data, isLoading, isError } = useGetProducts(from, to)
 	const salesPerProduct = new Map<string, Sale>()
 	const responseIsArray = Array.isArray(data)
 

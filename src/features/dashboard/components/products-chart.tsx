@@ -7,13 +7,18 @@ import {
 	ChartTooltip,
 	ChartTooltipContent,
 } from '@/components/chart'
-import { useMonthlySales } from '../hook/useMonthlySales'
+import { useDateFilter } from '../context/date-filter-context'
+import { useMonthlySales } from '../hook/use-monthly-sales'
 import { ChartWrapper } from './chart-wrapper'
 
 type ProductsChartProps = React.ComponentProps<'div'>
 
 export const ProductsChart: React.FC<ProductsChartProps> = () => {
-	const { monthlySales, isLoading, isError, isEmpty } = useMonthlySales()
+	const { startDate, endDate } = useDateFilter()
+	const { monthlySales, isLoading, isError, isEmpty } = useMonthlySales(
+		startDate,
+		endDate,
+	)
 
 	// Transform monthly sales to chart data format
 	const chartData = React.useMemo(() => {

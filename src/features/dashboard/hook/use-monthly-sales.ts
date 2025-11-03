@@ -9,8 +9,8 @@ type MonthlySale = {
 	totalRevenue: number
 }
 
-export function useMonthlySales() {
-	const { data, isLoading, isError } = useGetProducts()
+export function useMonthlySales(from?: Date, to?: Date) {
+	const { data, isLoading, isError } = useGetProducts(from, to)
 
 	const monthlySales = useMemo(() => {
 		const salesByMonth = new Map<string, MonthlySale>()

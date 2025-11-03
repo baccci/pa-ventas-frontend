@@ -4,38 +4,42 @@ import { FilterIcon } from 'lucide-react'
 import React from 'react'
 import { Button } from '@/components/button'
 import { Card } from '@/components/card'
+import { useDateFilter } from '../context/date-filter-context'
 import { DatePicker } from './date-picker'
 
 export default function Filters() {
 	const {
-		startDate,
-		endDate,
-		startDateOpen,
-		endDateOpen,
-		setStartDate,
-		setEndDate,
-		setStartDateOpen,
-		setEndDateOpen,
-	} = useFiltersState()
+		inputStartDate,
+		inputEndDate,
+		setInputStartDate,
+		setInputEndDate,
+		applyFilters,
+	} = useDateFilter()
+	const { startDateOpen, endDateOpen, setStartDateOpen, setEndDateOpen } =
+		useFiltersState()
+
+	const handleApplyFilters = () => {
+		applyFilters()
+	}
 
 	return (
 		<Card title="Filtros">
 			<div className="flex gap-2 items-end">
 				<DatePicker
 					label="Fecha de inicio"
-					date={startDate}
-					setDate={setStartDate}
+					date={inputStartDate}
+					setDate={setInputStartDate}
 					open={startDateOpen}
 					setOpen={setStartDateOpen}
 				/>
 				<DatePicker
 					label="Fecha de fin"
-					date={endDate}
-					setDate={setEndDate}
+					date={inputEndDate}
+					setDate={setInputEndDate}
 					open={endDateOpen}
 					setOpen={setEndDateOpen}
 				/>
-				<Button>
+				<Button onClick={handleApplyFilters}>
 					<FilterIcon width={16} /> Filtrar
 				</Button>
 			</div>
@@ -44,18 +48,12 @@ export default function Filters() {
 }
 
 function useFiltersState() {
-	const [startDate, setStartDate] = React.useState<Date | undefined>(undefined)
-	const [endDate, setEndDate] = React.useState<Date | undefined>(undefined)
 	const [startDateOpen, setStartDateOpen] = React.useState(false)
 	const [endDateOpen, setEndDateOpen] = React.useState(false)
 
 	return {
-		startDate,
-		endDate,
 		startDateOpen,
 		endDateOpen,
-		setStartDate,
-		setEndDate,
 		setStartDateOpen,
 		setEndDateOpen,
 	}

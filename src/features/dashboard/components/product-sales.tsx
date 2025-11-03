@@ -1,12 +1,14 @@
 import type React from 'react'
 import { Card } from '@/components/card'
 import { ProductCard } from '@/components/product-card'
-import { useSales } from '../hook/useSales'
+import { useDateFilter } from '../context/date-filter-context'
+import { useSales } from '../hook/use-sales'
 
 type ProductSalesProps = React.ComponentProps<'div'>
 
 export const ProductSales: React.FC<ProductSalesProps> = () => {
-	const { sales, isLoading, isError } = useSales()
+	const { startDate, endDate } = useDateFilter()
+	const { sales, isLoading, isError } = useSales(startDate, endDate)
 
 	const salesArray = Array.from(sales.values())
 
